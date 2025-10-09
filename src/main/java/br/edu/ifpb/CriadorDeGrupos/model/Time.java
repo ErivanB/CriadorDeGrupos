@@ -34,4 +34,14 @@ public class Time {
 
     public List<Candidato> getCandidatos() { return candidatos; }
     public void setCandidatos(List<Candidato> candidatos) { this.candidatos = candidatos; }
+
+    public void adicionarCandidato(Candidato candidato) {
+        candidatos.add(candidato);
+        candidato.setTime(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Time{id=" + id + ", nome='" + nome + "', candidatos=" + candidatos.size() + "}";
+    }
 }

@@ -1,9 +1,9 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
 
-import com.divisaotimes.dao.CandidatoDAO;
-import com.divisaotimes.model.Candidato;
-import com.divisaotimes.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.dao.CandidatoDAO;
+import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
+import br.edu.ifpb.CriadorDeGrupos.model.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +37,18 @@ public class CandidatoService {
 
     public List<Candidato> buscarPorTime(Time time) {
         return candidatoDAO.findByTime(time);
+    }
+
+    public void limparCandidatos() {
+        candidatoDAO.deleteAll();
+    }
+
+    public List<Candidato> buscarSemTime() {
+        return candidatoDAO.findSemTime();
+    }
+
+    public Candidato criarCandidato(String nome) {
+        Candidato candidato = new Candidato(nome);
+        return candidatoDAO.save(candidato);
     }
 }

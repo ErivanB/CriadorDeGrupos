@@ -1,8 +1,7 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
-
-import com.divisaotimes.model.Candidato;
-import com.divisaotimes.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
+import br.edu.ifpb.CriadorDeGrupos.model.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,15 @@ public class DivisaoService {
         // Limpar dados anteriores
         limparDadosAnterios();
 
+        // Validar entrada
+        if (quantidadeTimes <= 0) {
+            throw new IllegalArgumentException("Quantidade de times deve ser maior que zero");
+        }
+
+        if (nomesCandidatos == null || nomesCandidatos.isEmpty()) {
+            throw new IllegalArgumentException("Lista de candidatos não pode estar vazia");
+        }
+
         // Criar times
         List<Time> times = criarTimes(quantidadeTimes);
 
@@ -35,18 +43,20 @@ public class DivisaoService {
         // Distribuir candidatos nos times
         distribuirCandidatos(candidatosEmbaralhados, times);
 
-        return times;
+        return timeService.listarTodos();
     }
 
     private void limparDadosAnterios() {
-        // Implementar se necessário limpar dados anteriores
+        // Primeiro limpar os candidatos (devido à constraint de foreign key)
+        candidatoService.limparCandidatos();
+        // Depois limpar os times
+        timeService.limparTimes();
     }
 
     private List<Time> criarTimes(int quantidade) {
         List<Time> times = new ArrayList<>();
         for (int i = 1; i <= quantidade; i++) {
-            Time time = new Time("Time " + i);
-            timeService.salvar(time);
+            Time time = timeService.criarTime("Time " + i);
             times.add(time);
         }
         return times;
@@ -55,8 +65,7 @@ public class DivisaoService {
     private List<Candidato> criarCandidatos(List<String> nomes) {
         List<Candidato> candidatos = new ArrayList<>();
         for (String nome : nomes) {
-            Candidato candidato = new Candidato(nome);
-            candidatoService.salvar(candidato);
+            Candidato candidato = candidatoService.criarCandidato(nome);
             candidatos.add(candidato);
         }
         return candidatos;
@@ -78,5 +87,32 @@ public class DivisaoService {
 
             indexTime = (indexTime + 1) % times.size();
         }
+    }
+
+    public String visualizarDivisao() {
+        List<Time> times = timeService.listarTodos();
+        List<Candidato> candidatosSemTime = candidatoService.buscarSemTime();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== DIVISÃO DE TIMES ===\n\n");
+
+        for (Time time : times) {
+            List<Candidato> candidatosDoTime = candidatoService.buscarPorTime(time);
+            sb.append(time.getNome()).append(" (").append(candidatosDoTime.size()).append(" jogadores):\n");
+
+            for (Candidato candidato : candidatosDoTime) {
+                sb.append("  - ").append(candidato.getNome()).append("\n");
+            }
+            sb.append("\n");
+        }
+
+        if (!candidatosSemTime.isEmpty()) {
+            sb.append("Candidatos sem time (").append(candidatosSemTime.size()).append("):\n");
+            for (Candidato candidato : candidatosSemTime) {
+                sb.append("  - ").append(candidato.getNome()).append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 }

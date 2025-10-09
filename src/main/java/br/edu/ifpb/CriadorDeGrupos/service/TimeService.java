@@ -1,10 +1,9 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
-
-import com.divisaotimes.dao.CandidatoDAO;
-import com.divisaotimes.dao.TimeDAO;
-import com.divisaotimes.model.Candidato;
-import com.divisaotimes.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.dao.CandidatoDAO;
+import br.edu.ifpb.CriadorDeGrupos.dao.TimeDAO;
+import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
+import br.edu.ifpb.CriadorDeGrupos.model.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +46,18 @@ public class TimeService {
             candidato.setTime(time);
             candidatoDAO.update(candidato);
         }
+    }
+
+    public void limparTimes() {
+        timeDAO.deleteAll();
+    }
+
+    public Time buscarPorNome(String nome) {
+        return timeDAO.findByNome(nome);
+    }
+
+    public Time criarTime(String nome) {
+        Time time = new Time(nome);
+        return timeDAO.save(time);
     }
 }

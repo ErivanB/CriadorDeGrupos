@@ -1,7 +1,6 @@
 package br.edu.ifpb.CriadorDeGrupos.dao;
 
-
-import com.divisaotimes.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.model.Time;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -32,7 +31,7 @@ public class TimeDAO {
 
     public List<Time> findAll() {
         TypedQuery<Time> query = entityManager.createQuery(
-                "SELECT t FROM Time t", Time.class);
+                "SELECT t FROM Time t ORDER BY t.id", Time.class);
         return query.getResultList();
     }
 
@@ -47,5 +46,19 @@ public class TimeDAO {
     @Transactional
     public Time update(Time time) {
         return entityManager.merge(time);
+    }
+
+    @Transactional
+    public void deleteAll() {
+        entityManager.createQuery("DELETE FROM Time").executeUpdate();
+    }
+
+    public Time findByNome(String nome) {
+        TypedQuery<Time> query = entityManager.createQuery(
+                "SELECT t FROM Time t WHERE t.nome = :nome", Time.class);
+        query.setParameter("nome", nome);
+
+        List<Time> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
     }
 }

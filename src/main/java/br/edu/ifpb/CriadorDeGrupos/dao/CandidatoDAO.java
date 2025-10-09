@@ -1,8 +1,7 @@
 package br.edu.ifpb.CriadorDeGrupos.dao;
 
-
-import com.divisaotimes.model.Candidato;
-import com.divisaotimes.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
+import br.edu.ifpb.CriadorDeGrupos.model.Time;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -33,7 +32,7 @@ public class CandidatoDAO {
 
     public List<Candidato> findAll() {
         TypedQuery<Candidato> query = entityManager.createQuery(
-                "SELECT c FROM Candidato c", Candidato.class);
+                "SELECT c FROM Candidato c ORDER BY c.id", Candidato.class);
         return query.getResultList();
     }
 
@@ -47,7 +46,7 @@ public class CandidatoDAO {
 
     public List<Candidato> findByTime(Time time) {
         TypedQuery<Candidato> query = entityManager.createQuery(
-                "SELECT c FROM Candidato c WHERE c.time = :time", Candidato.class);
+                "SELECT c FROM Candidato c WHERE c.time = :time ORDER BY c.id", Candidato.class);
         query.setParameter("time", time);
         return query.getResultList();
     }
@@ -55,5 +54,16 @@ public class CandidatoDAO {
     @Transactional
     public Candidato update(Candidato candidato) {
         return entityManager.merge(candidato);
+    }
+
+    @Transactional
+    public void deleteAll() {
+        entityManager.createQuery("DELETE FROM Candidato").executeUpdate();
+    }
+
+    public List<Candidato> findSemTime() {
+        TypedQuery<Candidato> query = entityManager.createQuery(
+                "SELECT c FROM Candidato c WHERE c.time IS NULL ORDER BY c.id", Candidato.class);
+        return query.getResultList();
     }
 }
