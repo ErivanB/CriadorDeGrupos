@@ -27,6 +27,7 @@ Um sistema CRUD desenvolvido em Java com Spring Boot para divisão aleatória de
 + Jakarta Persistence
 
 ## 🚀 Funcionalidades
+
 ✅ CRUD Completo de Candidatos e Times
 
 ✅ Divisão Aleatória de candidatos entre times
@@ -77,12 +78,12 @@ Um sistema CRUD desenvolvido em Java com Spring Boot para divisão aleatória de
 ## 1. Clone o repositório
 
 bash
-git clone https://github.com/seu-usuario/sistema-divisao-times.git
-cd sistema-divisao-times
+git clone https://github.com/ErivanB/CriadorDeGrupos.git
+cd CriadorDeGrupos
 
 ## 2. Configure o banco de dados
 sql
-CREATE DATABASE divisao_times;
+CREATE DATABASE CriadorDeGrupos;
 
 ## 3. Configure a aplicação
 Edite o arquivo src/main/resources/application.properties:
@@ -90,9 +91,9 @@ Edite o arquivo src/main/resources/application.properties:
 ## properties
 ### MySQL Database Configuration
 
-spring.datasource.url=jdbc:mysql://localhost:3306/divisao_times?useSSL=false&serverTimezone=UTC
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+spring.datasource.url=jdbc:mysql://localhost:3306/CriadorDeGrupos?useSSL=false&serverTimezone=UTC
+spring.datasource.username= ????????
+spring.datasource.password= ????????
 
 ## JPA/Hibernate Configuration
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
@@ -203,7 +204,7 @@ curl -X POST http://localhost:8080/api/divisao/dividir \
   -H "Content-Type: application/json" \
   -d '{
     "quantidadeTimes": 2,
-    "nomesCandidatos": ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"]
+    "nomesCandidatos": ["Alice", "Alisson", "Charlie", "Diana", "Eve", "Gildo"]
   }'
   
 Usando Postman:
