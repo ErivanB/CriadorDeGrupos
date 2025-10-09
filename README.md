@@ -26,7 +26,7 @@ Um sistema CRUD desenvolvido em Java com Spring Boot para divisão aleatória de
 
 + Jakarta Persistence
 
-🚀 Funcionalidades
+## 🚀 Funcionalidades
 ✅ CRUD Completo de Candidatos e Times
 
 ✅ Divisão Aleatória de candidatos entre times
@@ -39,67 +39,75 @@ Um sistema CRUD desenvolvido em Java com Spring Boot para divisão aleatória de
 
 ✅ Transações gerenciadas manualmente
 
-📦 Estrutura do Projeto
-text
-src/
+## 📦 Estrutura do Projeto
+
+<pre><code>src/
 ├── main/
-│   ├── java/
-│   │   └── com/
-│   │       └── divisaotimes/
-│   │           ├── config/
-│   │           │   └── DatabaseConfig.java
-│   │           ├── model/
-│   │           │   ├── Candidato.java
-│   │           │   └── Time.java
-│   │           ├── dao/
-│   │           │   ├── CandidatoDAO.java
-│   │           │   └── TimeDAO.java
-│   │           ├── service/
-│   │           │   ├── CandidatoService.java
-│   │           │   ├── TimeService.java
-│   │           │   └── DivisaoService.java
-│   │           ├── controller/
-│   │           │   └── DivisaoTimesController.java
-│   │           └── SistemaDivisaoTimesApplication.java
-│   └── resources/
-│       └── application.properties
-⚙️ Configuração e Instalação
-Pré-requisitos
-Java 17 ou superior
+│   ├── java/
+│   │   └── com/
+│   │       └── divisaotimes/
+│   │           ├── config/
+│   │           │   └── DatabaseConfig.java
+│   │           ├── model/
+│   │           │   ├── Candidato.java
+│   │           │   └── Time.java
+│   │           ├── dao/
+│   │           │   ├── CandidatoDAO.java
+│   │           │   └── TimeDAO.java
+│   │           ├── service/
+│   │           │   ├── CandidatoService.java
+│   │           │   ├── TimeService.java
+│   │           │   └── DivisaoService.java
+│   │           ├── controller/
+│   │           │   └── DivisaoTimesController.java
+│   │           └── SistemaDivisaoTimesApplication.java
+│   └── resources/
+│       └── application.properties</code></pre>
 
-MySQL 8.0 ou superior
+## ⚙️ Configuração e Instalação
 
-Maven 3.6+
+*Pré-requisitos*
 
-1. Clone o repositório
++ Java 17 ou superior
+
++ MySQL 8.0 ou superior
+
++ Maven 3.6+
+
+## 1. Clone o repositório
+
 bash
 git clone https://github.com/seu-usuario/sistema-divisao-times.git
 cd sistema-divisao-times
-2. Configure o banco de dados
+
+## 2. Configure o banco de dados
 sql
 CREATE DATABASE divisao_times;
-3. Configure a aplicação
+
+## 3. Configure a aplicação
 Edite o arquivo src/main/resources/application.properties:
 
-properties
+## properties
 # MySQL Database Configuration
 spring.datasource.url=jdbc:mysql://localhost:3306/divisao_times?useSSL=false&serverTimezone=UTC
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 
-# JPA/Hibernate Configuration
+## JPA/Hibernate Configuration
 spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-4. Execute a aplicação
+
+## 4. Execute a aplicação
+
 bash
 mvn spring-boot:run
 A aplicação estará disponível em: http://localhost:8080
 
-📡 API Endpoints
-Divisão de Times
-POST /api/divisao/dividir
+## 📡 API Endpoints
++ Divisão de Times
++ POST /api/divisao/dividir
 
 json
 {
@@ -127,7 +135,8 @@ json
     ]
   }
 ]
-🎯 Como Usar
+
+## 🎯 Como Usar
 Inicie a aplicação
 
 Envie uma requisição POST para /api/divisao/dividir com:
@@ -140,19 +149,20 @@ Receba a divisão aleatória dos times
 
 Os dados são persistidos automaticamente no banco MySQL
 
-🔧 Características Técnicas
-Implementação sem Spring Data JPA
-Este projeto utiliza JPA/Hibernate puro com:
+## 🔧 Características Técnicas
 
-EntityManager para operações de persistência
++ Implementação sem Spring Data JPA
++ Este projeto utiliza JPA/Hibernate puro com:
 
-@PersistenceContext para injeção de dependência
++ EntityManager para operações de persistência
 
-Transações gerenciadas manualmente com @Transactional
++ @PersistenceContext para injeção de dependência
 
-Queries JPQL customizadas
++ Transações gerenciadas manualmente com @Transactional
 
-Exemplo de DAO Implementation
++ Queries JPQL customizadas
+
+*Exemplo de DAO Implementation*
 java
 @Repository
 public class CandidatoDAO {
