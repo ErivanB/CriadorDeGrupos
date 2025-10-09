@@ -88,7 +88,8 @@ CREATE DATABASE divisao_times;
 Edite o arquivo src/main/resources/application.properties:
 
 ## properties
-# MySQL Database Configuration
+### MySQL Database Configuration
+
 spring.datasource.url=jdbc:mysql://localhost:3306/divisao_times?useSSL=false&serverTimezone=UTC
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
@@ -109,7 +110,7 @@ A aplicação estará disponível em: http://localhost:8080
 + Divisão de Times
 + POST /api/divisao/dividir
 
-json
+<pre><code> json
 {
   "quantidadeTimes": 3,
   "nomesCandidatos": ["João", "Maria", "Pedro", "Ana", "Carlos", "Julia"]
@@ -134,7 +135,7 @@ json
       {"id": 5, "nome": "Carlos", "time": {"id": 2, "nome": "Time 2"}}
     ]
   }
-]
+] </code></pre>
 
 ## 🎯 Como Usar
 Inicie a aplicação
@@ -181,7 +182,8 @@ public class CandidatoDAO {
     }
 }
 ## 🗃 Modelo de Dados
-Tabela: candidatos
+
+Tabela: ** candidatos **
 Campo	Tipo	Descrição
 id	BIGINT	Chave primária auto-incremento
 nome	VARCHAR(100)	Nome do candidato
@@ -190,15 +192,20 @@ Tabela: times
 Campo	Tipo	Descrição
 id	BIGINT	Chave primária auto-incremento
 nome	VARCHAR(50)	Nome do time
+
 ## 🧪 Testando a API
-Usando cURL:
-bash
+
+* Usando cURL:
+
+</pre></code> bash
+
 curl -X POST http://localhost:8080/api/divisao/dividir \
   -H "Content-Type: application/json" \
   -d '{
     "quantidadeTimes": 2,
     "nomesCandidatos": ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"]
   }'
+  
 Usando Postman:
 Método: POST
 
@@ -210,7 +217,7 @@ json
 {
   "quantidadeTimes": 2,
   "nomesCandidatos": ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank"]
-}
+}</code></pre>
 ## 📝 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
