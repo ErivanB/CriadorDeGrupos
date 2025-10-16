@@ -52,6 +52,12 @@
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
+        <!-- ORM -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+
         <!-- Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

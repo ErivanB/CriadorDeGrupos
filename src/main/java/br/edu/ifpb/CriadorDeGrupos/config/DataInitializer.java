@@ -1,7 +1,7 @@
 package br.edu.ifpb.CriadorDeGrupos.config;
 
 
-
+//classe antiga deve ser excluida mas esta gerando acoplamento
 import br.edu.ifpb.CriadorDeGrupos.service.DivisaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

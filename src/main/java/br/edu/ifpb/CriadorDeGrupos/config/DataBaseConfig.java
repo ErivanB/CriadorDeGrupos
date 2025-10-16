@@ -1,6 +1,6 @@
 package br.edu.ifpb.CriadorDeGrupos.config;
 
-
+// essa classe são antigas deve ser refatoradas ou ate msm excluidas
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
