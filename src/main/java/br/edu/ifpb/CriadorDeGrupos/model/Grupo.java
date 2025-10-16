@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "times")
-public class Time {
+@Table(name = "grupo")
+public class Grupo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,12 +16,12 @@ public class Time {
     private String nome;
 
     @OneToMany(mappedBy = "time", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Candidato> candidatos = new ArrayList<>();
+    private List<Aluno> candidatos = new ArrayList<>();
 
     // Construtores
-    public Time() {}
+    public Grupo() {}
 
-    public Time(String nome) {
+    public Grupo(String nome) {
         this.nome = nome;
     }
 
@@ -32,10 +32,10 @@ public class Time {
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
-    public List<Candidato> getCandidatos() { return candidatos; }
-    public void setCandidatos(List<Candidato> candidatos) { this.candidatos = candidatos; }
+    public List<Aluno> getCandidatos() { return candidatos; }
+    public void setCandidatos(List<Aluno> candidatos) { this.candidatos = candidatos; }
 
-    public void adicionarCandidato(Candidato candidato) {
+    public void adicionarCandidato(Aluno candidato) {
         candidatos.add(candidato);
         candidato.setTime(this);
     }

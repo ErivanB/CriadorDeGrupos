@@ -1,33 +1,33 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
 
-import br.edu.ifpb.CriadorDeGrupos.dao.CandidatoDAO;
-import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
-import br.edu.ifpb.CriadorDeGrupos.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.dao.AlunoDAO;
+import br.edu.ifpb.CriadorDeGrupos.model.Aluno;
+import br.edu.ifpb.CriadorDeGrupos.model.Grupo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CandidatoService {
+public class AlunoService {
 
     @Autowired
-    private CandidatoDAO candidatoDAO;
+    private AlunoDAO candidatoDAO;
 
-    public Candidato salvar(Candidato candidato) {
+    public Aluno salvar(Aluno candidato) {
         return candidatoDAO.save(candidato);
     }
 
-    public Candidato buscarPorId(Long id) {
+    public Aluno buscarPorId(Long id) {
         return candidatoDAO.findById(id);
     }
 
-    public List<Candidato> listarTodos() {
+    public List<Aluno> listarTodos() {
         return candidatoDAO.findAll();
     }
 
-    public Candidato atualizar(Candidato candidato) {
+    public Aluno atualizar(Aluno candidato) {
         return candidatoDAO.update(candidato);
     }
 
@@ -35,7 +35,7 @@ public class CandidatoService {
         candidatoDAO.delete(id);
     }
 
-    public List<Candidato> buscarPorTime(Time time) {
+    public List<Aluno> buscarPorTime(Grupo time) {
         return candidatoDAO.findByTime(time);
     }
 
@@ -43,12 +43,12 @@ public class CandidatoService {
         candidatoDAO.deleteAll();
     }
 
-    public List<Candidato> buscarSemTime() {
+    public List<Aluno> buscarSemTime() {
         return candidatoDAO.findSemTime();
     }
 
-    public Candidato criarCandidato(String nome) {
-        Candidato candidato = new Candidato(nome);
+    public Aluno criarCandidato(String nome) {
+        Aluno candidato = new Aluno(nome);
         return candidatoDAO.save(candidato);
     }
 }

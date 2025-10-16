@@ -1,36 +1,36 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
-import br.edu.ifpb.CriadorDeGrupos.dao.CandidatoDAO;
-import br.edu.ifpb.CriadorDeGrupos.dao.TimeDAO;
-import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
-import br.edu.ifpb.CriadorDeGrupos.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.dao.AlunoDAO;
+import br.edu.ifpb.CriadorDeGrupos.dao.GrupoDAO;
+import br.edu.ifpb.CriadorDeGrupos.model.Aluno;
+import br.edu.ifpb.CriadorDeGrupos.model.Grupo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TimeService {
+public class GrupoService {
 
     @Autowired
-    private TimeDAO timeDAO;
+    private GrupoDAO timeDAO;
 
     @Autowired
-    private CandidatoDAO candidatoDAO;
+    private AlunoDAO candidatoDAO;
 
-    public Time salvar(Time time) {
+    public Grupo salvar(Grupo time) {
         return timeDAO.save(time);
     }
 
-    public Time buscarPorId(Long id) {
+    public Grupo buscarPorId(Long id) {
         return timeDAO.findById(id);
     }
 
-    public List<Time> listarTodos() {
+    public List<Grupo> listarTodos() {
         return timeDAO.findAll();
     }
 
-    public Time atualizar(Time time) {
+    public Grupo atualizar(Grupo time) {
         return timeDAO.update(time);
     }
 
@@ -39,8 +39,8 @@ public class TimeService {
     }
 
     public void adicionarCandidato(Long timeId, Long candidatoId) {
-        Time time = timeDAO.findById(timeId);
-        Candidato candidato = candidatoDAO.findById(candidatoId);
+        Grupo time = timeDAO.findById(timeId);
+        Aluno candidato = candidatoDAO.findById(candidatoId);
 
         if (time != null && candidato != null) {
             candidato.setTime(time);
@@ -52,12 +52,12 @@ public class TimeService {
         timeDAO.deleteAll();
     }
 
-    public Time buscarPorNome(String nome) {
+    public Grupo buscarPorNome(String nome) {
         return timeDAO.findByNome(nome);
     }
 
-    public Time criarTime(String nome) {
-        Time time = new Time(nome);
+    public Grupo criarTime(String nome) {
+        Grupo time = new Grupo(nome);
         return timeDAO.save(time);
     }
 }

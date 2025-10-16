@@ -1,10 +1,10 @@
 package br.edu.ifpb.CriadorDeGrupos.controller;
 
 
-import br.edu.ifpb.CriadorDeGrupos.model.Time;
-import br.edu.ifpb.CriadorDeGrupos.service.CandidatoService;
+import br.edu.ifpb.CriadorDeGrupos.model.Grupo;
+import br.edu.ifpb.CriadorDeGrupos.service.AlunoService;
 import br.edu.ifpb.CriadorDeGrupos.service.DivisaoService;
-import br.edu.ifpb.CriadorDeGrupos.service.TimeService;
+import br.edu.ifpb.CriadorDeGrupos.service.GrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,21 +15,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-public class DivisaoTimesController {
+public class DivisaoGruposController {
 
     @Autowired
     private DivisaoService divisaoService;
 
     @Autowired
-    private TimeService timeService;
+    private GrupoService timeService;
 
     @Autowired
-    private CandidatoService candidatoService;
+    private AlunoService candidatoService;
 
     @PostMapping("/dividir")
     public Map<String, Object> dividirTimes(@RequestBody DivisaoRequest request) {
         try {
-            List<Time> times = divisaoService.dividirTimes(
+            List<Grupo> times = divisaoService.dividirTimes(
                     request.getQuantidadeTimes(),
                     request.getNomesCandidatos()
             );
@@ -50,7 +50,7 @@ public class DivisaoTimesController {
     }
 
     @GetMapping("/times")
-    public List<Time> listarTimes() {
+    public List<Grupo> listarTimes() {
         return timeService.listarTodos();
     }
 

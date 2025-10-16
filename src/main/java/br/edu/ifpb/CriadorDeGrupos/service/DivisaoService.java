@@ -1,7 +1,7 @@
 package br.edu.ifpb.CriadorDeGrupos.service;
 
-import br.edu.ifpb.CriadorDeGrupos.model.Candidato;
-import br.edu.ifpb.CriadorDeGrupos.model.Time;
+import br.edu.ifpb.CriadorDeGrupos.model.Aluno;
+import br.edu.ifpb.CriadorDeGrupos.model.Grupo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.List;
 public class DivisaoService {
 
     @Autowired
-    private CandidatoService candidatoService;
+    private AlunoService candidatoService;
 
     @Autowired
-    private TimeService timeService;
+    private GrupoService timeService;
 
-    public List<Time> dividirTimes(int quantidadeTimes, List<String> nomesCandidatos) {
+    public List<Grupo> dividirTimes(int quantidadeTimes, List<String> nomesCandidatos) {
         // Limpar dados anteriores
         limparDadosAnterios();
 
@@ -32,13 +32,13 @@ public class DivisaoService {
         }
 
         // Criar times
-        List<Time> times = criarTimes(quantidadeTimes);
+        List<Grupo> times = criarTimes(quantidadeTimes);
 
         // Criar candidatos
-        List<Candidato> candidatos = criarCandidatos(nomesCandidatos);
+        List<Aluno> candidatos = criarCandidatos(nomesCandidatos);
 
         // Embaralhar candidatos
-        List<Candidato> candidatosEmbaralhados = embaralharLista(candidatos);
+        List<Aluno> candidatosEmbaralhados = embaralharLista(candidatos);
 
         // Distribuir candidatos nos times
         distribuirCandidatos(candidatosEmbaralhados, times);
@@ -53,19 +53,19 @@ public class DivisaoService {
         timeService.limparTimes();
     }
 
-    private List<Time> criarTimes(int quantidade) {
-        List<Time> times = new ArrayList<>();
+    private List<Grupo> criarTimes(int quantidade) {
+        List<Grupo> times = new ArrayList<>();
         for (int i = 1; i <= quantidade; i++) {
-            Time time = timeService.criarTime("Time " + i);
+            Grupo time = timeService.criarTime("Time " + i);
             times.add(time);
         }
         return times;
     }
 
-    private List<Candidato> criarCandidatos(List<String> nomes) {
-        List<Candidato> candidatos = new ArrayList<>();
+    private List<Aluno> criarCandidatos(List<String> nomes) {
+        List<Aluno> candidatos = new ArrayList<>();
         for (String nome : nomes) {
-            Candidato candidato = candidatoService.criarCandidato(nome);
+            Aluno candidato = candidatoService.criarCandidato(nome);
             candidatos.add(candidato);
         }
         return candidatos;
@@ -77,11 +77,11 @@ public class DivisaoService {
         return copia;
     }
 
-    private void distribuirCandidatos(List<Candidato> candidatos, List<Time> times) {
+    private void distribuirCandidatos(List<Aluno> candidatos, List<Grupo> times) {
         int indexTime = 0;
 
-        for (Candidato candidato : candidatos) {
-            Time timeAtual = times.get(indexTime);
+        for (Aluno candidato : candidatos) {
+            Grupo timeAtual = times.get(indexTime);
             candidato.setTime(timeAtual);
             candidatoService.atualizar(candidato);
 
@@ -90,17 +90,17 @@ public class DivisaoService {
     }
 
     public String visualizarDivisao() {
-        List<Time> times = timeService.listarTodos();
-        List<Candidato> candidatosSemTime = candidatoService.buscarSemTime();
+        List<Grupo> times = timeService.listarTodos();
+        List<Aluno> candidatosSemTime = candidatoService.buscarSemTime();
 
         StringBuilder sb = new StringBuilder();
         sb.append("=== DIVISÃO DE TIMES ===\n\n");
 
-        for (Time time : times) {
-            List<Candidato> candidatosDoTime = candidatoService.buscarPorTime(time);
+        for (Grupo time : times) {
+            List<Aluno> candidatosDoTime = candidatoService.buscarPorTime(time);
             sb.append(time.getNome()).append(" (").append(candidatosDoTime.size()).append(" jogadores):\n");
 
-            for (Candidato candidato : candidatosDoTime) {
+            for (Aluno candidato : candidatosDoTime) {
                 sb.append("  - ").append(candidato.getNome()).append("\n");
             }
             sb.append("\n");
@@ -108,7 +108,7 @@ public class DivisaoService {
 
         if (!candidatosSemTime.isEmpty()) {
             sb.append("Candidatos sem time (").append(candidatosSemTime.size()).append("):\n");
-            for (Candidato candidato : candidatosSemTime) {
+            for (Aluno candidato : candidatosSemTime) {
                 sb.append("  - ").append(candidato.getNome()).append("\n");
             }
         }
