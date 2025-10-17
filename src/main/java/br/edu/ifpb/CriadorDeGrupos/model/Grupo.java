@@ -10,38 +10,45 @@ public class Grupo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_grupo")
+    private Long id_grupo;
 
-    @Column(name = "nome", nullable = false, length = 50)
-    private String nome;
+    @Column(name = "id_sorteio")
+    private Long id_sorteio;
 
-    @OneToMany(mappedBy = "time", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Aluno> candidatos = new ArrayList<>();
+    @Column
+    private String nome_grupo;
+
+
+
+
+    @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Aluno> alunos = new ArrayList<>();
 
     // Construtores
     public Grupo() {}
 
     public Grupo(String nome) {
-        this.nome = nome;
+        this.nome_grupo = nome;
     }
 
     // Getters e Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId_grupo() { return id_grupo; }
+    public void setId_grupo(Long id) { this.id_grupo = id; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getNome() { return nome_grupo; }
+    public void setNome(String nome) { this.nome_grupo = nome; }
 
-    public List<Aluno> getCandidatos() { return candidatos; }
-    public void setCandidatos(List<Aluno> candidatos) { this.candidatos = candidatos; }
+    public List<Aluno> getAlunos() { return alunos; }
+    public void setAlunos(List<Aluno> candidatos) { this.alunos = candidatos; }
 
     public void adicionarCandidato(Aluno candidato) {
-        candidatos.add(candidato);
-        candidato.setTime(this);
+        alunos.add(candidato);
+        candidato.setGrupo(this);
     }
 
     @Override
     public String toString() {
-        return "Time{id=" + id + ", nome='" + nome + "', candidatos=" + candidatos.size() + "}";
+        return "Grupo {id=" + id_grupo + ", nome='" + nome_grupo + "', candidatos=" + alunos.size() + "}";
     }
 }

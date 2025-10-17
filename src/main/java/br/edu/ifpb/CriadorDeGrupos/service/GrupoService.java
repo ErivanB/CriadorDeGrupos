@@ -43,7 +43,7 @@ public class GrupoService {
         Aluno candidato = candidatoDAO.findById(candidatoId);
 
         if (time != null && candidato != null) {
-            candidato.setTime(time);
+            candidato.setGrupo(time);
             candidatoDAO.update(candidato);
         }
     }

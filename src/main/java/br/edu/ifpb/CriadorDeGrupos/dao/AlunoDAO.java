@@ -19,7 +19,7 @@ public class AlunoDAO extends MembroAcademico {
 
     @Transactional
     public Aluno save(Aluno candidato) {
-        if (candidato.getId() == null) {
+        if (candidato.getId_Aluno() == null) {
             entityManager.persist(candidato);
             return candidato;
         } else {
@@ -33,7 +33,7 @@ public class AlunoDAO extends MembroAcademico {
 
     public List<Aluno> findAll() {
         TypedQuery<Aluno> query = entityManager.createQuery(
-                "SELECT c FROM Aluno c ORDER BY c.id", Aluno.class);
+                "SELECT c FROM Aluno c ORDER BY c.id_Aluno", Aluno.class);
         return query.getResultList();
     }
 
@@ -47,7 +47,7 @@ public class AlunoDAO extends MembroAcademico {
 
     public List<Aluno> findByTime(Grupo time) {
         TypedQuery<Aluno> query = entityManager.createQuery(
-                "SELECT c FROM Aluno c WHERE c.time = :time ORDER BY c.id", Aluno.class);
+                "SELECT c FROM Aluno c WHERE c.grupo = :time ORDER BY c.id_Aluno", Aluno.class);
         query.setParameter("time", time);
         return query.getResultList();
     }
@@ -64,7 +64,7 @@ public class AlunoDAO extends MembroAcademico {
 
     public List<Aluno> findSemTime() {
         TypedQuery<Aluno> query = entityManager.createQuery(
-                "SELECT c FROM Aluno c WHERE c.time IS NULL ORDER BY c.id", Aluno.class);
+                "SELECT c FROM Aluno c WHERE c.grupo IS NULL ORDER BY c.id_Aluno", Aluno.class);
         return query.getResultList();
     }
 }

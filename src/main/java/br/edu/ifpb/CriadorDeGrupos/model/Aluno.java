@@ -8,14 +8,21 @@ public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_aluno")
+    private Long id_Aluno;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grupo_id")
-    private Grupo time;
+    private Grupo grupo;
+
+    @JoinColumn(name = "id_professor")
+    private Long id_Professor;
+
+    @Column(name = "matricula")
+    private String matricula;
 
     // Construtores
     public Aluno() {}
@@ -25,16 +32,17 @@ public class Aluno {
     }
 
     public Aluno(String nome, Grupo time) {
+
         this.nome = nome;
-        this.time = time;
+        this.grupo = time;
     }
 
     // Getters e Setters
-    public Long getId() {
-        return id;
+    public Long getId_Aluno() {
+        return id_Aluno;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_Aluno(Long id) {
+        this.id_Aluno = id;
     }
 
     public String getNome() {
@@ -44,16 +52,16 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public Grupo getTime() {
-        return time;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
-    public void setTime(Grupo time) {
-        this.time = time;
+    public void setGrupo(Grupo time) {
+        this.grupo = time;
     }
 
     @Override
     public String toString() {
-        return "ALUNO: {id=" + id + ", nome= " + nome + "', time=" + (time != null ? time.getNome() : "null") + "}";
+        return "ALUNO: {id=" + id_Aluno + ", nome= " + nome + "', time=" + (grupo != null ? grupo.getNome() : "null") + "}";
     }
 }

@@ -13,62 +13,63 @@ import java.util.List;
 public class DivisaoService {
 
     @Autowired
-    private AlunoService candidatoService;
+    private AlunoService alunoService;
 
     @Autowired
-    private GrupoService timeService;
+    private GrupoService grupoService;
 
-    public List<Grupo> dividirTimes(int quantidadeTimes, List<String> nomesCandidatos) {
+    public List<Grupo> dividirTimes(int quantidadeGrupos, List<String> nomesAlunos) {
         // Limpar dados anteriores
         limparDadosAnterios();
 
         // Validar entrada
-        if (quantidadeTimes <= 0) {
-            throw new IllegalArgumentException("Quantidade de times deve ser maior que zero");
+        if (quantidadeGrupos <= 0) {
+            throw new IllegalArgumentException("Quantidade de grupos deve ser maior que zero");
         }
 
-        if (nomesCandidatos == null || nomesCandidatos.isEmpty()) {
-            throw new IllegalArgumentException("Lista de candidatos não pode estar vazia");
+        if (nomesAlunos == null || nomesAlunos.isEmpty()) {
+            throw new IllegalArgumentException("Lista de alunos não pode estar vazia");
         }
 
         // Criar times
-        List<Grupo> times = criarTimes(quantidadeTimes);
+        List<Grupo> grupos = criarGrupos(quantidadeGrupos);
 
         // Criar candidatos
-        List<Aluno> candidatos = criarCandidatos(nomesCandidatos);
+        List<Aluno> alunos = criarAlunos(nomesAlunos);
 
         // Embaralhar candidatos
-        List<Aluno> candidatosEmbaralhados = embaralharLista(candidatos);
+        List<Aluno> alunosEmbaralhados = embaralharLista(alunos);
 
         // Distribuir candidatos nos times
-        distribuirCandidatos(candidatosEmbaralhados, times);
+        distribuirAlunos(alunosEmbaralhados, grupos);
 
-        return timeService.listarTodos();
+        return grupoService.listarTodos();
     }
 
     private void limparDadosAnterios() {
         // Primeiro limpar os candidatos (devido à constraint de foreign key)
-        candidatoService.limparCandidatos();
+        alunoService.limparCandidatos();
         // Depois limpar os times
-        timeService.limparTimes();
+        grupoService.limparTimes();
     }
 
-    private List<Grupo> criarTimes(int quantidade) {
+    private List<Grupo> criarGrupos(int quantidade) {
         List<Grupo> times = new ArrayList<>();
         for (int i = 1; i <= quantidade; i++) {
-            Grupo time = timeService.criarTime("Time " + i);
+            Grupo time = grupoService.criarTime("Time " + i);
             times.add(time);
         }
         return times;
     }
 
-    private List<Aluno> criarCandidatos(List<String> nomes) {
-        List<Aluno> candidatos = new ArrayList<>();
+
+    private List<Aluno> criarAlunos(List<String> nomes) {
+        List<Aluno> alunos = new ArrayList<>();
         for (String nome : nomes) {
-            Aluno candidato = candidatoService.criarCandidato(nome);
-            candidatos.add(candidato);
+            Aluno aluno = alunoService.criarCandidato(nome);
+            alunos.add(aluno);
         }
-        return candidatos;
+        return alunos;
     }
 
     private <T> List<T> embaralharLista(List<T> lista) {
@@ -77,27 +78,27 @@ public class DivisaoService {
         return copia;
     }
 
-    private void distribuirCandidatos(List<Aluno> candidatos, List<Grupo> times) {
+    private void distribuirAlunos(List<Aluno> alunos, List<Grupo> grupos) {
         int indexTime = 0;
 
-        for (Aluno candidato : candidatos) {
-            Grupo timeAtual = times.get(indexTime);
-            candidato.setTime(timeAtual);
-            candidatoService.atualizar(candidato);
+        for (Aluno candidato : alunos) {
+            Grupo timeAtual = grupos.get(indexTime);
+            candidato.setGrupo(timeAtual);
+            alunoService.atualizar(candidato);
 
-            indexTime = (indexTime + 1) % times.size();
+            indexTime = (indexTime + 1) % grupos.size();
         }
     }
 
     public String visualizarDivisao() {
-        List<Grupo> times = timeService.listarTodos();
-        List<Aluno> candidatosSemTime = candidatoService.buscarSemTime();
+        List<Grupo> times = grupoService.listarTodos();
+        List<Aluno> candidatosSemTime = alunoService.buscarSemTime();
 
         StringBuilder sb = new StringBuilder();
         sb.append("=== DIVISÃO DE TIMES ===\n\n");
 
         for (Grupo time : times) {
-            List<Aluno> candidatosDoTime = candidatoService.buscarPorTime(time);
+            List<Aluno> candidatosDoTime = alunoService.buscarPorTime(time);
             sb.append(time.getNome()).append(" (").append(candidatosDoTime.size()).append(" jogadores):\n");
 
             for (Aluno candidato : candidatosDoTime) {

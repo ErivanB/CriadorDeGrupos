@@ -13,42 +13,42 @@ import java.util.List;
 public class AlunoService {
 
     @Autowired
-    private AlunoDAO candidatoDAO;
+    private AlunoDAO alunoDAO;
 
     public Aluno salvar(Aluno candidato) {
-        return candidatoDAO.save(candidato);
+        return alunoDAO.save(candidato);
     }
 
     public Aluno buscarPorId(Long id) {
-        return candidatoDAO.findById(id);
+        return alunoDAO.findById(id);
     }
 
     public List<Aluno> listarTodos() {
-        return candidatoDAO.findAll();
+        return alunoDAO.findAll();
     }
 
     public Aluno atualizar(Aluno candidato) {
-        return candidatoDAO.update(candidato);
+        return alunoDAO.update(candidato);
     }
 
     public void excluir(Long id) {
-        candidatoDAO.delete(id);
+        alunoDAO.delete(id);
     }
 
     public List<Aluno> buscarPorTime(Grupo time) {
-        return candidatoDAO.findByTime(time);
+        return alunoDAO.findByTime(time);
     }
 
     public void limparCandidatos() {
-        candidatoDAO.deleteAll();
+        alunoDAO.deleteAll();
     }
 
     public List<Aluno> buscarSemTime() {
-        return candidatoDAO.findSemTime();
+        return alunoDAO.findSemTime();
     }
 
     public Aluno criarCandidato(String nome) {
         Aluno candidato = new Aluno(nome);
-        return candidatoDAO.save(candidato);
+        return alunoDAO.save(candidato);
     }
 }

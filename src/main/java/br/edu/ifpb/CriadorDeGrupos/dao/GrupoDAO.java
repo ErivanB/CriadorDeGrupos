@@ -17,7 +17,7 @@ public class GrupoDAO {
 
     @Transactional
     public Grupo save(Grupo time) {
-        if (time.getId() == null) {
+        if (time.getId_grupo() == null) {
             entityManager.persist(time);
             return time;
         } else {
@@ -31,7 +31,7 @@ public class GrupoDAO {
 
     public List<Grupo> findAll() {
         TypedQuery<Grupo> query = entityManager.createQuery(
-                "SELECT t FROM Grupo t ORDER BY t.id", Grupo.class);
+                "SELECT t FROM Grupo t ORDER BY t.id_grupo", Grupo.class);
         return query.getResultList();
     }
 
